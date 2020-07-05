@@ -1,0 +1,8 @@
+body {
+    background: #EEEEEE;
+}
+
+a:hover {
+    text-decoration: none;
+    cursor: pointer
+}

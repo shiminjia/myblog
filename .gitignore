@@ -1,0 +1,11 @@
+/.idea
+
+*.xml
+*.iml
+
+*.exe
+*.log
+
+./myblog
+
+dump.rdb

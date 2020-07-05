@@ -1,0 +1,14 @@
+.topic_edit {
+    width: 1140px;
+    position: relative;
+    margin: 20px auto;
+}
+
+.topic-read {
+    position: relative;
+    margin: 20px auto;
+}
+
+.topic_create {
+    margin-top: 20px
+}

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- no cache -->
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/assets/css/base.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/css/category.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/css/msg.css"/>
+    <title>Myblog - 分类</title>
+</head>
+<body>
+
+{{template "msg" .}}
+
+{{template "nav" .}}
+
+<div class="category_create container">
+    <div class="card">
+        <div class="card-body">
+            <form name="myform" method="post" action="/category/create" id="form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>分类名称：</label>
+                    <input name="Name" type="text" class="form-control" value="{{.Name}}">
+                </div>
+            </form>
+            <div>
+                <button type="submit" class="btn btn-primary mb-2" id="submit">增加</button>
+                <button type="button" class="btn btn-primary mb-2" id="back">返回</button>
+            </div>
+            <div class="card" style="margin-top: 10px">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>分类列表</label>
+                    </div>
+
+                    <table class="table thead-light">
+                        <thead>
+                        <tr>
+                            <th scope="col">编号</th>
+                            <th scope="col">分类</th>
+                            <th scope="col">创建时间</th>
+                            <th scope="col">操作</th>
+                        </tr>
+                        </thead>
+                        {{range .Categories}}
+                            <tbody>
+                            <tr>
+                                <td>{{.Id}}</td>
+                                <td>{{.Name}}</td>
+                                <td>{{.Time.CreatedAt}}</td>
+                                <td><a class="delete" href="#" value="{{.Id}}">删除</a></td>
+                            </tr>
+                            </tbody>
+                        {{end}}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+
+<!-- jquery-confirm -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script>
+    $(function () {
+        $('#submit').click(function () {
+            $.confirm({
+                title: '确认',
+                content: '确定增加分类吗?',
+                icon: 'glyphicon glyphicon-question-sign',
+                buttons: {
+                    ok: {
+                        text: '确认',
+                        btnClass: 'btn-primary',
+                        action: function () {
+                            $('#form').submit();
+                        }
+                    },
+                    cancel: {
+                        text: '取消',
+                        btnClass: 'btn-primary'
+                    }
+                }
+            })
+        });
+        $('.delete').click(function () {
+            var category_id = $(this).attr('value');
+            $.confirm({
+                title: '确认',
+                content: '确定删除分类吗?',
+                icon: 'glyphicon glyphicon-question-sign',
+                buttons: {
+                    ok: {
+                        text: '确认',
+                        btnClass: 'btn-primary',
+                        action: function () {
+                            window.location.href = "/category/delete/" + category_id
+                        }
+                    },
+                    cancel: {
+                        text: '取消',
+                        btnClass: 'btn-primary'
+                    }
+                }
+            })
+        });
+
+        $('#back').click(function () {
+            $.confirm({
+                title: '确认',
+                content: '你的分类将不会保存，确认返回主页吗?',
+                icon: 'glyphicon glyphicon-question-sign',
+                buttons: {
+                    ok: {
+                        text: '确认',
+                        btnClass: 'btn-primary',
+                        action: function () {
+                            location.href = "/";
+                        }
+                    },
+                    cancel: {
+                        text: '取消',
+                        btnClass: 'btn-primary'
+                    }
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>
